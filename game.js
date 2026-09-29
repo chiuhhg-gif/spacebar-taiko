@@ -140,7 +140,7 @@ function startGame() {
 
 function handleSpaceHit() {
     if (notes.length > 0) {
-        let currentTime = performance.now() - startTime;
+        let currentTime = backgroundAudio ? backgroundAudio.currentTime * 1000 : 0;
         let target = notes[0];
         let diff = Math.abs(currentTime - target);
 
@@ -174,7 +174,7 @@ function mainLoop() {
 
 function update() {
     if (gameState === "PLAYING") {
-        let currentTime = performance.now() - startTime;
+        let currentTime = backgroundAudio ? backgroundAudio.currentTime * 1000 : 0;
 
         for (let i = notes.length - 1; i >= 0; i--) {
             let timeUntilHit = notes[i] - currentTime;
@@ -223,7 +223,7 @@ function draw() {
         ctx.fillText("Start Game", startButtonRect.x + startButtonRect.width / 2, startButtonRect.y + startButtonRect.height / 2);
 
     } else if (gameState === "PLAYING") {
-        let currentTime = performance.now() - startTime;
+        let currentTime = backgroundAudio ? backgroundAudio.currentTime * 1000 : 0;
 
         // Safe background draw (won't stay pitch black if image is missing)
         if (bgImage.complete && bgImage.naturalHeight !== 0) {
