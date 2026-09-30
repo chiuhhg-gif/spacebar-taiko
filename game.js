@@ -93,14 +93,17 @@ window.addEventListener("mousemove", (e) => {
     mousePos.y = e.clientY - rect.top;
 });
 
-window.addEventListener("mousedown", (e) => {
-    if (e.button !== 0) return;
+window.addEventListener("pointerdown", (e) => {
     if (gameState === "START") {
         if (isInside(mousePos, startButtonRect)) startGame();
+    } else if (gameState === "PLAYING") {
+        e.preventDefault();
+        handleSpaceHit(); // Allows tapping anywhere on screen or canvas to hit notes
     } else if (gameState === "GAMEOVER") {
         if (isInside(mousePos, restartButtonRect)) gameState = "START";
     }
 });
+
 
 window.addEventListener("keydown", (e) => {
     if (gameState === "START") {
@@ -112,6 +115,11 @@ window.addEventListener("keydown", (e) => {
         if (e.code === "Space") {
             e.preventDefault();
             handleSpaceHit();
+        }
+    } else if (gameState === "GAMEOVER") {
+        if (e.code === "Space" || e.code === "Enter") {
+            e.preventDefault();
+            gameState = "START";
         }
     }
 });
