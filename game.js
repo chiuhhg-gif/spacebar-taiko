@@ -160,7 +160,7 @@ function handleSpaceHit() {
             notes.shift();
             g++;
             setFeedback("GOOD!", "#FFFF00");
-        } else {
+        } else if (diff<= PERFECT_WINDOW * 10){
             notes.shift();
             m++;
             setFeedback("MISS", "#FF0000");
